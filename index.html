@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebView Camera Capture</title>
+    <script>
+        function takePicture() {
+            if (window.PlatformApi) {
+                // Send request to Flutter to take a picture
+                window.PlatformApi.postMessage(JSON.stringify({
+                    action: "takePicture",
+                    overlayType: "default", // Example parameter
+                    uiConfig: {
+                        title: "Take a Picture",
+                        captureHelpText: "Align your face and take a picture"
+                    }
+                }));
+            } else {
+                console.log("PlatformApi not available");
+            }
+        }
+
+        function receiveImage(base64String) {
+            // Convert base64 string to image and display it
+            let imgElement = document.getElementById("capturedImage");
+            imgElement.src = "data:image/png;base64," + base64String;
+        }
+
+        // Listen for messages from Flutter WebView
+        window.addEventListener("message", function(event) {
+            try {
+                let data = JSON.parse(event.data);
+                if (data.action === "imageCaptured" && data.imageBase64) {
+                    receiveImage(data.imageBase64);
+                }
+            } catch (error) {
+                console.error("Error processing message: ", error);
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>WebView Camera Capture</h1>
+    <button onclick="takePicture()">Take Picture</button>
+    <br><br>
+    <img id="capturedImage" src="" alt="Captured Image" width="300" style="display: none;" onload="this.style.display='block'">
+</body>
+</html>
