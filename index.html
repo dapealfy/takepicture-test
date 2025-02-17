@@ -7,9 +7,9 @@
     <title>WebView Camera Capture</title>
     <script>
         function takePicture() {
-            if (window.PlatformApi) {
+            if (window.postMessage) {
                 // Send request to Flutter to take a picture
-                window.PlatformApi.postMessage(JSON.stringify({
+                window.postMessage(JSON.stringify({
                     action: "takePicture",
                     overlayType: "default", // Example parameter
                     uiConfig: {
