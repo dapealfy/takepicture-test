@@ -8,8 +8,7 @@
     <script>
         function takePicture() {
             // Send request to Flutter to take a picture
-            window.parent.postMessage = window.PlatformApi.postMessage;
-            window.PlatformApi.postMessage(JSON.stringify({
+            window.parent.postMessage(JSON.stringify({
                 action: "takePicture",
                 overlayType: "default", // Example parameter
                 uiConfig: {
