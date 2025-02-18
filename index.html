@@ -11,31 +11,20 @@
         }
 
         function takePicture() {
-            PlatformApi.takePicture({
+            var data = PlatformApi.takePicture({
                 overlayType: "ktp",
                 uiConfig: {
                     title: "Take a Picture",
                     captureHelpText: "Align your face and take a picture"
                 }
             });
+            console.log(data);
         }
 
-        function receiveImage(base64String) {
+        function sendImage(base64String) {
             let imgElement = document.getElementById("capturedImage");
             imgElement.src = "data:image/png;base64," + base64String;
         }
-
-        window.addEventListener("message", function (event) {
-            try {
-                let data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
-
-                if (data.action === "imageCaptured" && data.imageBase64) {
-                    receiveImage(data.imageBase64);
-                }
-            } catch (error) {
-                console.error("Error processing message: ", error);
-            }
-        });
     </script>
 </head>
 
