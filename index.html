@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebView Camera Capture</title>
     <script>
+        PlatformApi = {
+            takePicture: (message) => window.flutter_inappwebview.callHandler('PlatformApi.takePicture', message)
+        }
+
         function takePicture() {
-            window.PlatformApi.takePicture(JSON.stringify({
+            PlatformApi.takePicture({
                 overlayType: "ktp",
                 uiConfig: {
                     title: "Take a Picture",
                     captureHelpText: "Align your face and take a picture"
                 }
-            }));
+            });
         }
 
         function receiveImage(base64String) {
