@@ -7,8 +7,7 @@
     <title>WebView Camera Capture</title>
     <script>
         function takePicture() {
-            window.PlatformApi.postMessage(JSON.stringify({
-                action: "takePicture",
+            window.PlatformApi.takePicture(JSON.stringify({
                 overlayType: "ktp",
                 uiConfig: {
                     title: "Take a Picture",
